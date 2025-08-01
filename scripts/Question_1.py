@@ -5,6 +5,9 @@ import seaborn as sb
 import os
 
 dataset = pd.read_csv(os.path.join(os.path.dirname(__file__), "../data/all_stocks_5yr.csv"))
+script_dir = os.path.dirname(__file__)
+output_dir = os.path.abspath(os.path.join(script_dir, '..', 'picture/Question_1'))
+os.makedirs(output_dir, exist_ok=True)
 
 print(dataset.head())
 print(dataset.info())
@@ -47,6 +50,7 @@ plt.ylabel('Daily Return Std Dev (Volatility)')
 plt.axhline(volatility_growth_df['daily_volatility'].mean(), color='gray', linestyle='--', label='Avg Volatility')
 plt.legend()
 plt.tight_layout()
+plt.savefig(os.path.join(output_dir, "growth_vs_volatility.png"))
 plt.show()
 
 
@@ -61,4 +65,5 @@ plt.title('Volatility Comparison: Top Gainers vs Bottom Losers')
 plt.ylabel('Daily Volatility (Std Dev)')
 plt.xlabel('')
 plt.tight_layout()
+plt.savefig(os.path.join(output_dir, "volatility_boxplot.png"))
 plt.show()
