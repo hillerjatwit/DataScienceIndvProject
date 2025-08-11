@@ -6,6 +6,9 @@ import os
 
 dataset = pd.read_csv(os.path.join(os.path.dirname(__file__), "../data/all_stocks_5yr.csv"))
 
+script_dir = os.path.dirname(__file__)
+output_dir = os.path.abspath(os.path.join(script_dir, '..', 'picture/Question_4'))
+
 
 
 dataset['date'] = pd.to_datetime(dataset['date'])
@@ -55,6 +58,8 @@ plt.xlabel('Annual Return')
 plt.ylabel('Stock Name')
 plt.legend()
 plt.tight_layout()
+plt.savefig(os.path.join(output_dir, "Top 10 Stocks Closest to 10% Annual Return (Sorted by Stability).png"))
+
 plt.show()
 
 
@@ -64,6 +69,8 @@ plt.title('Top 10 Most Stable Stocks (7.5% - 12.5% Annual Return)')
 plt.xlabel('Close Price Variance')
 plt.ylabel('Stock Name')
 plt.tight_layout()
+plt.savefig(os.path.join(output_dir, "Top 10 Most Stable Stocks (7.5% - 12.5% Annual Return).png"))
+
 plt.show()
 
 
@@ -75,6 +82,8 @@ plt.xlabel('Annual Return')
 plt.ylabel('Frequency')
 plt.legend()
 plt.tight_layout()
+plt.savefig(os.path.join(output_dir, "Distribution of Annual Returns for All Stocks.png"))
+
 plt.show()
 
 
@@ -86,4 +95,6 @@ plt.xlabel('Annual Return')
 plt.ylabel('Close Price Variance')
 plt.legend()
 plt.tight_layout()
+plt.savefig(os.path.join(output_dir, "Annual Return vs Variance of Closing Price.png"))
+
 plt.show()

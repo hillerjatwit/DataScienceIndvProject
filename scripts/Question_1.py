@@ -34,24 +34,52 @@ volatility_growth_df = pd.DataFrame({'growth': growth, 'daily_volatility': volat
 volatility_growth_df.dropna(inplace=True)
 
 
-#Top 5 growing compaines
-print("\nTop 5 Growing Compaines")
-print(growth.head())
+# Top 5 growing companies
+print("\nTop 5 Growing Companies")
+top_growing = growth.head()
+print(top_growing)
 
-#Top 5 regressing companies
+print("\nVolatility of Top 5 Growing Companies")
+print(volatility[top_growing.index])
+
+# Top 5 regressing companies
 print("\nTop 5 Regressing Companies")
-print(growth.tail())
+top_regressing = growth.tail()
+print(top_regressing)
+
+print("\nVolatility of Top 5 Regressing Companies")
+print(volatility[top_regressing.index])
 
 plt.figure(figsize=(10, 6))
-sb.scatterplot(data=volatility_growth_df, x='growth', y='daily_volatility', hue='growth', palette='coolwarm', alpha=0.7)
+
+# Scatter plot
+sb.scatterplot(data=volatility_growth_df, 
+               x='growth', 
+               y='daily_volatility', 
+               hue='growth', 
+               palette='coolwarm', 
+               alpha=0.7)
+
+# Add regression line (lowess=False for linear fit)
+sb.regplot(data=volatility_growth_df, 
+           x='growth', 
+           y='daily_volatility', 
+           scatter=False, 
+           color='black', 
+           line_kws={'linewidth': 2})
+
 plt.title('Company Growth vs. Daily Volatility (2013–2018)')
 plt.xlabel('Growth %')
 plt.ylabel('Daily Return Std Dev (Volatility)')
-plt.axhline(volatility_growth_df['daily_volatility'].mean(), color='gray', linestyle='--', label='Avg Volatility')
+plt.axhline(volatility_growth_df['daily_volatility'].mean(), 
+            color='gray', 
+            linestyle='--', 
+            label='Avg Volatility')
 plt.legend()
 plt.tight_layout()
-plt.savefig(os.path.join(output_dir, "growth_vs_volatility.png"))
+plt.savefig(os.path.join(output_dir, "growth_vs_volatility_with_trend.png"))
 plt.show()
+
 
 
 # Add group labels
